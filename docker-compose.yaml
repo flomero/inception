@@ -3,14 +3,42 @@ services:
     build: srcs/requirements/nginx
     container_name: nginx
     ports:
-      - "80:80"
+      - 80:80
+      - 443:443
     volumes:
       - ./web:/var/www/html
+    depends_on:
+      - wordpress
+      - mariadb
+    networks:
+      - inception
+    restart: always
+
   wordpress:
     build: srcs/requirements/wordpress
     container_name: wordpress
     volumes:
       - ./web:/var/www/html
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+    restart: always
+
   mariadb:
     build: srcs/requirements/mariadb
     container_name: mariadb
+    volumes:
+      - ./database:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
+networks:
+  inception:
+    name: inception
+    driver: bridge

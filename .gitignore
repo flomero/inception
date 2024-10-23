@@ -6,3 +6,6 @@ secrets/*
 
 # web folder
 web/*
+
+# data folder
+database/*
