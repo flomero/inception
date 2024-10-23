@@ -3,3 +3,6 @@
 # Ignore all secrets
 secrets/*
 .env
+
+# web folder
+web/*
