@@ -4,7 +4,7 @@ RUN apt update && apt upgrade -y && apt install -y \
 	nginx \
 	openssl
 
-COPY nginx.conf /etc/nginx/sites-available/default
+COPY conf/nginx.conf /etc/nginx/sites-available/default
 
 RUN openssl req \
             -x509 \

@@ -6,11 +6,11 @@ RUN apt update && apt upgrade -y && apt install -y \
 	curl \
 	netcat
 
-COPY www.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
 # needed to create the pid file
 RUN mkdir /run/php
 
-COPY installwp.sh .
+COPY tools/installwp.sh installwp.sh
 RUN chmod +x installwp.sh
 CMD ["./installwp.sh"]
