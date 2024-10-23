@@ -5,7 +5,7 @@ chmod +x wp-cli.phar
 ./wp-cli.phar core download --allow-root
 
 # wait for maria db
-until nc -z mariadb 3306
+until nc -z -w50 mariadb 3306
 do
 	echo "Waiting for MariaDB to start..."
 	sleep 1

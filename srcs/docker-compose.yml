@@ -6,7 +6,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./web:/var/www/html
+      - ../web:/var/www/html
     depends_on:
       - wordpress
       - mariadb
@@ -18,7 +18,7 @@ services:
     build: srcs/requirements/wordpress
     container_name: wordpress
     volumes:
-      - ./web:/var/www/html
+      - ../web:/var/www/html
     depends_on:
       - mariadb
     networks:
@@ -29,7 +29,7 @@ services:
     build: srcs/requirements/mariadb
     container_name: mariadb
     volumes:
-      - ./database:/var/lib/mysql
+      - ../database:/var/lib/mysql
     networks:
       - inception
     restart: always
