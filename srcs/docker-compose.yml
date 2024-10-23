@@ -2,9 +2,11 @@ services:
   nginx:
     build: srcs/requirements/nginx
     container_name: nginx
+    # TODO: remove port 80
     ports:
       - 80:80
       - 443:443
+    # TODO: move volumes to /home/flfische/data
     volumes:
       - ../web:/var/www/html
     depends_on:
@@ -13,10 +15,12 @@ services:
     networks:
       - inception
     restart: always
+    env_file: ".env"
 
   wordpress:
     build: srcs/requirements/wordpress
     container_name: wordpress
+    # TODO: move volumes to /home/flfische/data
     volumes:
       - ../web:/var/www/html
     depends_on:
@@ -28,6 +32,7 @@ services:
   mariadb:
     build: srcs/requirements/mariadb
     container_name: mariadb
+    # TODO: move volumes to /home/flfische/data
     volumes:
       - ../database:/var/lib/mysql
     networks:
