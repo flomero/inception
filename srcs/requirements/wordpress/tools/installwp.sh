@@ -11,7 +11,19 @@ do
 	sleep 1
 done
 
-./wp-cli.phar config create --dbname=wordpress --dbuser=wpuser --dbpass=password --dbhost=mariadb --allow-root
-./wp-cli.phar core install --url=localhost --title=inception --admin_user=admin --admin_password=admin --admin_email=admin@admin.com --allow-root
+./wp-cli.phar config create \
+	--dbname=$WP_DB_NAME \
+	--dbuser=$WP_DB_USER \
+	--dbpass=$WP_DB_PASSWORD \
+	--dbhost=$WP_DB_HOST \
+	--allow-root
+
+./wp-cli.phar core install \
+	--url=$DOMAIN \
+	--title=$WP_TITLE \
+	--admin_user=$WP_ADMIN_USER \
+	--admin_password=$WP_ADMIN_PASSWORD \
+	--admin_email=$WP_ADMIN_EMAIL \
+	--allow-root
 
 php-fpm7.4 -F

@@ -28,6 +28,7 @@ services:
     networks:
       - inception
     restart: always
+    env_file: ".env"
 
   mariadb:
     build: srcs/requirements/mariadb
@@ -42,6 +43,7 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 5s
       retries: 10
+    env_file: ".env"
 
 networks:
   inception:
