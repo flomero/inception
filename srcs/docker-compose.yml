@@ -57,6 +57,17 @@ services:
       - inception
     restart: always
 
+  adminer:
+    build: srcs/requirements/adminer
+    container_name: adminer
+    ports:
+      - 8080:80
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+    restart: always
+
 networks:
   inception:
     name: inception
