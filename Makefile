@@ -2,7 +2,7 @@ SRC_DIR = srcs
 COMPOSE_FILE=$(SRC_DIR)/docker-compose.yml
 
 all:
-	docker compose -f $(COMPOSE_FILE) up --build -d
+	docker compose -f $(COMPOSE_FILE) up --build -d --remove-orphans --force-recreate
 
 down:
 	docker compose  -f $(COMPOSE_FILE) down
