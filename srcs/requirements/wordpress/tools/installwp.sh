@@ -2,7 +2,9 @@
 cd /var/www/html
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
-./wp-cli.phar core download --allow-root
+
+./wp-cli.phar core download \
+	--allow-root
 
 # wait for maria db
 until nc -z -w50 mariadb 3306
@@ -32,5 +34,23 @@ done
 	--role=author \
 	--user_pass=$WP_USER_PASSWORD \
 	--allow-root
+
+./wp-cli.phar plugin install \
+	redis-cache \
+	--activate \
+	--allow-root
+
+./wp-cli.phar plugin update \
+	--all \
+	--allow-root
+
+./wp-cli.phar config set WP_CACHE true --raw --allow-root
+./wp-cli.phar config set WP_REDIS_HOST redis --allow-root
+./wp-cli.phar config set WP_REDIS_PORT 6379 --allow-root
+
+./wp-cli.phar redis enable \
+	--allow-root
+
+chown -R www-data:www-data /var/www/html
 
 php-fpm7.4 -F

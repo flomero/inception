@@ -45,6 +45,18 @@ services:
       retries: 10
     env_file: ".env"
 
+  redis:
+    build: srcs/requirements/redis
+    container_name: redis
+    # TODO: move volumes to /home/flfische/data
+    volumes:
+      - ../web:/var/www/html
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+    restart: always
+
 networks:
   inception:
     name: inception
