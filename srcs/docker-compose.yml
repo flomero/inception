@@ -11,7 +11,6 @@ services:
       - ../web:/var/www/html
     depends_on:
       - wordpress
-      - mariadb
     networks:
       - inception
     restart: always
@@ -24,7 +23,8 @@ services:
     volumes:
       - ../web:/var/www/html
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     networks:
       - inception
     restart: always
@@ -63,7 +63,8 @@ services:
     ports:
       - 8080:80
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     networks:
       - inception
     restart: always
