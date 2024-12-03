@@ -13,7 +13,7 @@ services:
       - wordpress
     networks:
       - inception
-    restart: always
+    restart: unless-stopped
     env_file: ".env"
 
   wordpress:
@@ -27,8 +27,12 @@ services:
         condition: service_healthy
     networks:
       - inception
-    restart: always
+    restart: unless-stopped
     env_file: ".env"
+    secrets:
+      - wp_db_password
+      - wp_admin_password
+      - wp_user_password
 
   mariadb:
     build: srcs/requirements/mariadb
@@ -44,6 +48,8 @@ services:
       timeout: 5s
       retries: 10
     env_file: ".env"
+    secrets:
+      - wp_db_password
 
   redis:
     build: srcs/requirements/redis
@@ -55,7 +61,7 @@ services:
       - wordpress
     networks:
       - inception
-    restart: always
+    restart: unless-stopped
 
   adminer:
     build: srcs/requirements/adminer
@@ -67,9 +73,19 @@ services:
         condition: service_healthy
     networks:
       - inception
-    restart: always
+    restart: unless-stopped
 
 networks:
   inception:
     name: inception
     driver: bridge
+
+secrets:
+  wp_db_password:
+    file: ../secrets/wp_db_password.txt
+  wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ../secrets/wp_user_password.txt
+  ftp_password:
+    file: ../secrets/ftp_password.txt

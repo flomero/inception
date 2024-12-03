@@ -1,4 +1,23 @@
 #!/bin/bash
+WP_USER_PASSWORD = $(cat /run/secrets/wp_user_password)
+WP_DB_PASSWORD = $(cat /run/secrets/wp_db_password)
+WP_ADMIN_PASSWORD = $(cat /run/secrets/wp_admin_password)
+
+if [ -z "$WP_USER_PASSWORD" ]; then
+	echo "Error: WP_USER_PASSWORD is not set!"
+	exit 1
+fi
+
+if [ -z "$WP_DB_PASSWORD" ]; then
+	echo "Error: WP_DB_PASSWORD is not set!"
+	exit 1
+fi
+
+if [ -z "$WP_ADMIN_PASSWORD" ]; then
+	echo "Error: WP_ADMIN_PASSWORD is not set!"
+	exit 1
+fi
+
 cd /var/www/html
 curl -o /usr/local/bin/wp -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x /usr/local/bin/wp
