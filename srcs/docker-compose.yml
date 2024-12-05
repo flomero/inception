@@ -75,6 +75,17 @@ services:
       - inception
     restart: unless-stopped
 
+  portainer:
+    build: srcs/requirements/portainer
+    container_name: portainer
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - inception
+    restart: unless-stopped
+
 networks:
   inception:
     name: inception
