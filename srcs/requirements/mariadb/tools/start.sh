@@ -1,6 +1,11 @@
 #!/bin/bash
 
-WP_DB_PASSWORD=$(cat /run/secrets/wp_db_password)
+if [ ! -f /run/secrets/wp_db_password ]; then
+	echo "No secret found for wp_db_password"
+	exit 1
+fi
+
+export WP_DB_PASSWORD=$(cat /run/secrets/wp_db_password)
 
 envsubst < /etc/mysql/init.sql > /etc/mysql/tmp.sql
 mv /etc/mysql/tmp.sql /etc/mysql/init.sql
