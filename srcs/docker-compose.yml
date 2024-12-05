@@ -86,6 +86,21 @@ services:
       - inception
     restart: unless-stopped
 
+  ftp:
+    build: srcs/requirements/ftpserver
+    container_name: ftp
+    ports:
+      - 21:21
+      - 21000-21010:21000-21010
+    volumes:
+      - ../web:/var/www/html
+    networks:
+      - inception
+    restart: unless-stopped
+    secrets:
+      - ftp_password
+    env_file: ".env"
+
 networks:
   inception:
     name: inception
