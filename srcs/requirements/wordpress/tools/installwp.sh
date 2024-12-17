@@ -34,6 +34,7 @@ wp config create \
 	--dbuser=$WP_DB_USER \
 	--dbhost=$WP_DB_HOST \
 	--allow-root \
+	--quiet \
 	--prompt=dbpass < /run/secrets/wp_db_password
 
 wp core install \
@@ -42,6 +43,7 @@ wp core install \
 	--admin_user=$WP_ADMIN_USER \
 	--admin_email=$WP_ADMIN_EMAIL \
 	--allow-root \
+	--quiet \
 	--prompt=admin_password < /run/secrets/wp_admin_password
 
 wp user create \
@@ -49,6 +51,7 @@ wp user create \
 	$WP_USER_EMAIL \
 	--role=author \
 	--allow-root \
+	--quiet \
 	--prompt=user_pass < /run/secrets/wp_user_password
 
 wp plugin install \
