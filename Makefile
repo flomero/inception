@@ -8,7 +8,7 @@ SECRETS_DIR = secrets
 
 all: 
 	@chmod +x $(ENV_SCRIPT)
-	@./$(ENV_SCRIPT) $(ENV_FILE) && docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) up --build -d --remove-orphans --force-recreate
+	@./$(ENV_SCRIPT) $(ENV_FILE) && docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) up --build -d
 
 down:
 	docker compose  -f $(COMPOSE_FILE) down

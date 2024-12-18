@@ -21,7 +21,7 @@ services:
     container_name: wordpress
     # TODO: move volumes to /home/flfische/data
     volumes:
-      - ../web:/var/www/html
+      - ../data/web:/var/www/html
     depends_on:
       mariadb:
         condition: service_healthy
@@ -39,7 +39,7 @@ services:
     container_name: mariadb
     # TODO: move volumes to /home/flfische/data
     volumes:
-      - ../database:/var/lib/mysql
+      - ../data/database:/var/lib/mysql
     networks:
       - inception
     restart: always
@@ -56,7 +56,7 @@ services:
     container_name: redis
     # TODO: move volumes to /home/flfische/data
     volumes:
-      - ../web:/var/www/html
+      - ../data/web:/var/www/html
     depends_on:
       - wordpress
     networks:
@@ -82,6 +82,8 @@ services:
       - 9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      # TODO: move volumes to /home/flfische/data
+      - ../data/portainer:/data
     networks:
       - inception
     restart: unless-stopped
@@ -93,7 +95,8 @@ services:
       - 21:21
       - 40000-40100:40000-40100
     volumes:
-      - ../web:/var/www/html
+      # TODO: move volumes to /home/flfische/data
+      - ../data/web:/var/www/html
     networks:
       - inception
     restart: unless-stopped
