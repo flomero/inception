@@ -104,10 +104,45 @@ services:
       - ftp_password
     env_file: ".env"
 
+  # staticsite:
+  #   build: srcs/requirements/staticsite
+  #   container_name: staticsite
+  #   ports:
+  #     - 8081:80
+  #   volumes:
+  #     - ./requirements/staticsite/src:/app
+  #   networks:
+  #     - inception
+  #   restart: unless-stopped
+  #   tty: true
+
 networks:
   inception:
     name: inception
     driver: bridge
+
+# volumes:
+#   db_data:
+#     name: "db_data"
+#     driver: local
+#     driver_opts:
+#       type: "none"
+#       o: "bind"
+#       device: "../data/database" # TODO: move volumes to /home/flfische/data
+#   wp_data:
+#     name: "wp_data"
+#     driver: local
+#     driver_opts:
+#       type: "none"
+#       o: "bind"
+#       device: "../data/web" # TODO: move volumes to /home/flfische/data
+#   portainer_data:
+#     name: "portainer_data"
+#     driver: local
+#     driver_opts:
+#       type: "none"
+#       o: "bind"
+#       device: "../data/portainer" # TODO: move volumes to /home/flfische/data
 
 secrets:
   wp_db_password:

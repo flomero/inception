@@ -6,7 +6,7 @@ _One container is not enough - we need to go deeper!_
 
 ### Wordpress
 
-- [http://localhost:80](http://localhost:80)
+- [http://localhost:80](http://localhost:80) (not available if HTTPS only)
 - [http://localhost:433](http://localhost:433)
 
 ### Adminer

@@ -12,4 +12,4 @@ COPY conf/rsyslog.conf /etc/rsyslog.conf
 
 RUN mkdir -p /var/run/vsftpd/empty
 
-CMD ["bash", "/app/setup.sh"]
+ENTRYPOINT ["bash", "/app/setup.sh"]

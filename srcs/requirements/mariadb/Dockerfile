@@ -12,4 +12,4 @@ COPY tools/init.sql /etc/mysql/init.sql
 COPY tools/start.sh start.sh
 RUN chmod +x start.sh
 
-CMD ["./start.sh"]
+ENTRYPOINT ["./start.sh"]
