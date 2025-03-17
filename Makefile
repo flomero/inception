@@ -19,6 +19,10 @@ reset:
 
 re: down all
 
+new:
+	@chmod +x $(ENV_SCRIPT)
+	@./$(ENV_SCRIPT) $(ENV_FILE) && docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) up --build -d --force-recreate --remove-orphans
+
 secretfiles:
 	touch $(SECRETS_DIR)/wp_db_password.txt
 	touch $(SECRETS_DIR)/wp_admin_password.txt
