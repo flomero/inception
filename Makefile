@@ -7,6 +7,9 @@ ENV_FILE = $(SRC_DIR)/.env
 SECRETS_DIR = secrets
 
 all: 
+	@mkdir -p /home/flfische/data/database
+	@mkdir -p /home/flfische/data/web
+	@mkdir -p /home/flfische/data/portainer
 	@chmod +x $(ENV_SCRIPT)
 	@./$(ENV_SCRIPT) $(ENV_FILE) && docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) up --build -d
 
