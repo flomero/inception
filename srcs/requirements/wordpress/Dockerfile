@@ -21,4 +21,4 @@ RUN mkdir /run/php
 COPY tools/installwp.sh installwp.sh
 RUN chmod +x installwp.sh
 
-CMD ["./installwp.sh"]
+ENTRYPOINT ["./installwp.sh"]

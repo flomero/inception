@@ -8,12 +8,12 @@ services:
       - 443:443
     # TODO: move volumes to /home/flfische/data
     volumes:
-      - ../web:/var/www/html
+      - ../data/web:/var/www/html
     depends_on:
       - wordpress
     networks:
       - inception
-    restart: always
+    restart: unless-stopped
     env_file: ".env"
 
   wordpress:
@@ -21,21 +21,25 @@ services:
     container_name: wordpress
     # TODO: move volumes to /home/flfische/data
     volumes:
-      - ../web:/var/www/html
+      - ../data/web:/var/www/html
     depends_on:
       mariadb:
         condition: service_healthy
     networks:
       - inception
-    restart: always
+    restart: unless-stopped
     env_file: ".env"
+    secrets:
+      - wp_db_password
+      - wp_admin_password
+      - wp_user_password
 
   mariadb:
     build: srcs/requirements/mariadb
     container_name: mariadb
     # TODO: move volumes to /home/flfische/data
     volumes:
-      - ../database:/var/lib/mysql
+      - ../data/database:/var/lib/mysql
     networks:
       - inception
     restart: always
@@ -44,18 +48,20 @@ services:
       timeout: 5s
       retries: 10
     env_file: ".env"
+    secrets:
+      - wp_db_password
 
   redis:
     build: srcs/requirements/redis
     container_name: redis
     # TODO: move volumes to /home/flfische/data
     volumes:
-      - ../web:/var/www/html
+      - ../data/web:/var/www/html
     depends_on:
       - wordpress
     networks:
       - inception
-    restart: always
+    restart: unless-stopped
 
   adminer:
     build: srcs/requirements/adminer
@@ -67,9 +73,81 @@ services:
         condition: service_healthy
     networks:
       - inception
-    restart: always
+    restart: unless-stopped
+
+  portainer:
+    build: srcs/requirements/portainer
+    container_name: portainer
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # TODO: move volumes to /home/flfische/data
+      - ../data/portainer:/data
+    networks:
+      - inception
+    restart: unless-stopped
+
+  ftp:
+    build: srcs/requirements/ftpserver
+    container_name: ftp
+    ports:
+      - 21:21
+      - 40000-40100:40000-40100
+    volumes:
+      # TODO: move volumes to /home/flfische/data
+      - ../data/web:/var/www/html
+    networks:
+      - inception
+    restart: unless-stopped
+    secrets:
+      - ftp_password
+    env_file: ".env"
+
+  staticsite:
+    build: srcs/requirements/staticsite
+    container_name: staticsite
+    ports:
+      - 3000:3000
+    networks:
+      - inception
+    restart: unless-stopped
+    tty: true
 
 networks:
   inception:
     name: inception
     driver: bridge
+
+# volumes:
+#   db_data:
+#     name: "db_data"
+#     driver: local
+#     driver_opts:
+#       type: "none"
+#       o: "bind"
+#       device: "../data/database" # TODO: move volumes to /home/flfische/data
+#   wp_data:
+#     name: "wp_data"
+#     driver: local
+#     driver_opts:
+#       type: "none"
+#       o: "bind"
+#       device: "../data/web" # TODO: move volumes to /home/flfische/data
+#   portainer_data:
+#     name: "portainer_data"
+#     driver: local
+#     driver_opts:
+#       type: "none"
+#       o: "bind"
+#       device: "../data/portainer" # TODO: move volumes to /home/flfische/data
+
+secrets:
+  wp_db_password:
+    file: ../secrets/wp_db_password.txt
+  wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ../secrets/wp_user_password.txt
+  ftp_password:
+    file: ../secrets/ftp_password.txt

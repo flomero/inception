@@ -8,4 +8,4 @@ RUN chmod +x setup.sh
 
 EXPOSE 6379
 
-CMD ["./setup.sh"]
+ENTRYPOINT ["./setup.sh"]

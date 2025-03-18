@@ -9,3 +9,5 @@ web/*
 
 # data folder
 database/*
+
+data/*
