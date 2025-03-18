@@ -2,11 +2,8 @@ services:
   nginx:
     build: ./requirements/nginx
     container_name: nginx
-    # TODO: remove port 80
     ports:
-      - 80:80
       - 443:443
-    # TODO: move volumes to /home/flfische/data
     volumes:
       - wp_data:/var/www/html
     depends_on:
@@ -19,7 +16,6 @@ services:
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
-    # TODO: move volumes to /home/flfische/data
     volumes:
       - wp_data:/var/www/html
     depends_on:
@@ -37,7 +33,6 @@ services:
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
-    # TODO: move volumes to /home/flfische/data
     volumes:
       - db_data:/var/lib/mysql
     networks:
@@ -55,7 +50,6 @@ services:
   redis:
     build: ./requirements/redis
     container_name: redis
-    # TODO: move volumes to /home/flfische/data
     volumes:
       - wp_data:/var/www/html
     depends_on:
@@ -83,7 +77,6 @@ services:
       - 9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      # TODO: move volumes to /home/flfische/data
       - portainer_data:/data
     networks:
       - inception
@@ -96,7 +89,6 @@ services:
       - 21:21
       - 45000-45100:45000-45100
     volumes:
-      # TODO: move volumes to /home/flfische/data
       - wp_data:/var/www/html
     networks:
       - inception
