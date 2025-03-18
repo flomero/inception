@@ -24,3 +24,21 @@ _One container is not enough - we need to go deeper!_
 ### Static Page
 
 - [http://localhost:3000](http://localhost:3000)
+
+## Other Services
+
+### Redis
+
+Cache server for Wordpress.
+
+### MariaDB
+
+Database server for Wordpress.
+
+```bash
+mariadb -pPassword
+SHOW DATABASES;
+USE wordpress;
+SHOW TABLES;
+SELECT * FROM wp_comments;
+```
