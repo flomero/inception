@@ -8,7 +8,7 @@ services:
       - 443:443
     # TODO: move volumes to /home/flfische/data
     volumes:
-      - ../web:/var/www/html
+      - ../data/web:/var/www/html
     depends_on:
       - wordpress
     networks:
@@ -104,17 +104,15 @@ services:
       - ftp_password
     env_file: ".env"
 
-  # staticsite:
-  #   build: srcs/requirements/staticsite
-  #   container_name: staticsite
-  #   ports:
-  #     - 8081:80
-  #   volumes:
-  #     - ./requirements/staticsite/src:/app
-  #   networks:
-  #     - inception
-  #   restart: unless-stopped
-  #   tty: true
+  staticsite:
+    build: srcs/requirements/staticsite
+    container_name: staticsite
+    ports:
+      - 3000:3000
+    networks:
+      - inception
+    restart: unless-stopped
+    tty: true
 
 networks:
   inception:
